@@ -5,3 +5,13 @@ declare global {
         axios: AxiosInstance
     }
 }
+
+declare module 'vue' {
+    interface ComponentCustomProperties {
+        
+    }
+}
+
+declare module '@inertiajs/core' {
+    interface PageProps extends InertiaPageProps, AppPageProps {}
+}

@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'monsterrat';
+    src: url("/resources/fonts/montserrat/Montserrat-VariableFont_wght.ttf") format("truetype");
+}
+
+* {
+   font-family: 'monsterrat'; 
+}
+
+@theme{
+    --color-primary: #713EDA;
+}

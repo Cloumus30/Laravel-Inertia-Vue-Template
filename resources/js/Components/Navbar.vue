@@ -23,7 +23,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <nav class="bg-white border-gray-200 fixed top-0 right-0 left-0 ">
+    <nav class="bg-white border-gray-200 fixed top-0 right-0 left-0 z-40 ">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 border border-transparent border-b-[#120D40] border-b-2">
             <a :href="props.titleHref ? props.titleHref : '/'" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <slot v-if="!props.noLogo" name="logo">
@@ -39,7 +39,7 @@ const props = defineProps({
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
                 </svg>
             </button>
-            <div class="w-full md:block md:w-auto md:px-8" :class="[isShowMobile ? '' : 'hidden']" id="navbar-default">
+            <div class="w-full overflow-hidden transition-all ease-in duration-200 md:h-auto md:w-auto md:px-8" :class="[isShowMobile ? 'h-52' : 'h-0']" id="navbar-default">
                 <!-- Main slot -->                
                     <ul class="font-medium flex flex-col items-center p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white">
                         <li v-for="lst in props.list">

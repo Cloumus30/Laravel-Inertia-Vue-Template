@@ -1,8 +1,14 @@
 <script setup lang="ts">
+import 'vue3-carousel/carousel.css';
 import type { ListNavbarInterface } from '@/Interface/NavbarInterface';
 import Navbar from '../../Components/Navbar.vue';
 import dana from '../../../images/dana3.png';
 import dana2 from '../../../images/dana2.jpg';
+import project1 from '../../../images/project1.png';
+import rectangle1 from '../../../images/rectangle1.png';
+import {Icon} from '@iconify/vue';
+import { Carousel } from 'primevue';
+import { ref } from 'vue';
 
 const name = "Cloudias Imani"
 
@@ -34,6 +40,44 @@ const listNavbar:ListNavbarInterface[] = [
     //     ]
     // }
 ];
+
+// onMounted(() => {
+//     ProductService.getProductsSmall().then((data) => (products.value = data.slice(0, 9)));
+// })
+
+const products = ref();
+products.value = [
+    {
+        id:1
+    },
+    {
+        id:2
+    },
+    {
+        id:3
+    },
+    {
+        id:4
+    }
+]
+// products.value=[]
+const responsiveOptions = ref([
+    {
+        breakpoint: '1500px',
+        numVisible: 3,
+        numScroll: 1
+    },
+    {
+        breakpoint: '1200px',
+        numVisible: 2,
+        numScroll: 1
+    },
+    {
+        breakpoint: '790px',
+        numVisible: 1,
+        numScroll: 1
+    }
+]);
 </script>
 
 <template>
@@ -104,26 +148,158 @@ const listNavbar:ListNavbarInterface[] = [
     <!-- Introduction Detail -->
 
     <!-- My Services -->
-     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-        
-    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm">
-        <a href="#">
-            <img class="rounded-t-lg" src="" alt="" />
-        </a>
-        <div class="p-5">
-            <a href="#">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-            </a>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-            <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                Read more
-                <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                </svg>
-            </a>
+     <div class="grid grid-cols-1 bg-[#F2ECFF] pb-20 relative before:absolute before:h-[50%] before:w-[100%] before:bottom-0 before:bg-secondary-font">
+        <div class="w-full text-center text-primary-font font-bold text-4xl py-16 relative">
+            <h3>My Projects</h3>
         </div>
-    </div>
 
-     </div>
+        <Carousel :value="products" :numVisible="3" :numScroll="1" :responsiveOptions="responsiveOptions" :circular="true">
+            <template #item="slotProps">
+                 <div class="max-w-sm relative">
+                    <div class="bg-white border border-gray-200 rounded-lg shadow-xl py-8">
+                        <a href="#" class="flex justify-center">
+                            <img class="rounded-t-lg h-96" :src="project1" alt="Project Image" />
+                        </a>
+                        <div class="p-5">
+                            <a href="#">
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-[#021F3E] text-center">Title Of Project {{ slotProps.data.id }}</h5>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="h-16 relative">
+                        <a href="#" class="inline-flex items-center px-16 py-5 text-sm font-medium text-center text-white bg-primary-font rounded-lg hover:bg-primary-font-hover focus:ring-4 focus:outline-none focus:ring-blue-300 absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        Details
+                        </a>
+                    </div>
+                </div>
+            </template>
+            <template #previcon>
+                <button class="bg-primary-font px-4 py-2 focus:ring-purple-600 hover:bg-white hover:text-secondary-font text-white rounded-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="currentcolor" d="M16 22L6 12L16 2l1.775 1.775L9.55 12l8.225 8.225z"/></svg>
+                </button>
+            </template>
+            <template #nexticon>
+                <button class="bg-primary-font px-4 py-2 focus:ring-purple-600 hover:bg-white hover:text-secondary-font text-white rounded-md rotate-180">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="currentcolor" d="M16 22L6 12L16 2l1.775 1.775L9.55 12l8.225 8.225z"/></svg>
+                </button>
+            </template>
+            <template #empty>
+                <div class="h-50 relative mt-10">
+                    <div class="text-center font-bold text-3xl text-white">
+                        <h3>No Project :(</h3>
+                        <br>
+                        <h2>Please Give me One :)</h2>
+                    </div>
+                </div>
+            </template>
+        </Carousel>
+    </div>
     <!-- My Services -->
+
+    <!-- Personal Expertise -->
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-10 pt-14 px-10 box-border">
+        <div>
+            <div class="w-full text-center text-primary-font font-bold text-4xl py-16 relative">
+                <h3>Personal Expertise</h3>
+            </div>
+            <div class="grid grid-cols-2 gap-5 justify-center">
+                <div>
+                    <ul class="max-w-md space-y-8 text-gray-900 font-bold list-none list-inside ">
+                        <li>
+                            LARAVEL
+                            <div class="bg-primary-font w-full h-8 rounded-md">
+                            </div>
+                        </li>
+                        <li>
+                            PHP
+                            <div class="bg-primary-font w-full h-8 rounded-md">
+                            </div>
+                        </li>
+                        <li>
+                            JAVASCRIPT
+                            <div class="bg-primary-font w-full h-8 rounded-md">
+                            </div>
+                        </li>
+                        <li>
+                            VUE JS
+                            <div class="bg-primary-font w-full h-8 rounded-md">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="max-w-md space-y-8 text-gray-900 font-bold list-none list-inside ">
+                        <li>
+                            NODE JS
+                            <div class="bg-primary-font w-full h-8 rounded-md">
+                            </div>
+                        </li>
+                        <li>
+                            REDIS
+                            <div class="bg-primary-font w-full h-8 rounded-md">
+                            </div>
+                        </li>
+                        <li>
+                            MYSQL
+                            <div class="bg-primary-font w-full h-8 rounded-md">
+                            </div>
+                        </li>
+                        <li>
+                            POSTGRESQL
+                            <div class="bg-primary-font w-full h-8 rounded-md">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center font-bold text-primary-font my-9 text-xl">
+                <h1>And More ...</h1>
+            </div>
+        </div>
+        <div>
+            <img :src="rectangle1" alt="Computer Image">
+        </div>
+     </div>
+     <!-- Personal Expertise -->
+
+      <!-- Footer -->
+    <footer class="bg-white rounded-lg shadow-sm m-4">
+        <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+        <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2025 <a href="https://flowbite.com/" class="hover:underline">Cloudias</a>. All Rights Reserved.
+        </span>
+        <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
+            <li>
+                <a href="#" class="hover:underline me-4 md:me-6">About Me</a>
+            </li>
+            <li>
+                <a href="#" class="hover:underline me-4 md:me-6">Portfolio</a>
+            </li>
+            <li>
+                <ul class="flex gap-3">
+                    <li >
+                        <a href="" target="_blank">
+                            <Icon icon="logos:whatsapp-icon" width="1.5em" height="1.5em"></Icon>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="" target="_blank">
+                            <Icon icon="logos:github-icon" width="1.5em" height="1.5em" />
+                        </a>
+                    </li>
+                    <li >
+                        <a href="" target="_blank">
+                            <Icon icon="logos:google-gmail" width="1.5em" height="1.5em" />
+                        </a>
+                    </li>
+                    <li >
+                        <a href="" target="_blank">
+                            <Icon icon="logos:linkedin-icon" width="1.5em" height="1.5em" />
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        </div>
+    </footer>
+    <!-- Footer -->
 </template>

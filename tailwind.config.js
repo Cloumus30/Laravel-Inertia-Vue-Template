@@ -16,7 +16,11 @@ export default {
             },
             colors:{
                 'primary-font': '#713EDA',
+                'primary-font-hover': '#4305C3',
                 'secondary-font': '#31245C',
+            },
+            boxShadow: {
+                'landing-card': '0px 70px 10px rgba(0, 0, 0, 0.5)',
             }
         },
     },

@@ -6,6 +6,8 @@ import.meta.glob([
 import { createApp, h, type DefineComponent } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import {resolvePageComponent} from 'laravel-vite-plugin/inertia-helpers'
+import PrimeVue from 'primevue/config';
+import Aura from '@primeuix/themes/aura';
 
 createInertiaApp({
   resolve: name => 
@@ -14,8 +16,9 @@ createInertiaApp({
         import.meta.glob<DefineComponent>('./Pages/**/*.vue'),
     ),
   setup({ el, App, props, plugin }) {
-    createApp({ render: () => h(App, props) })
-      .use(plugin)
-      .mount(el)
+    const app = createApp({ render: () => h(App, props) })
+      .use(plugin);
+    app.use(PrimeVue, {theme:{preset: Aura}});
+    app.mount(el);
   },
 })

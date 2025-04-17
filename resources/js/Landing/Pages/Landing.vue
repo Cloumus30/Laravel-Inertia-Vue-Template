@@ -9,6 +9,7 @@ import rectangle1 from '../../../images/rectangle1.png';
 import {Icon} from '@iconify/vue';
 import { Carousel } from 'primevue';
 import { ref } from 'vue';
+import { Link } from '@inertiajs/vue3';
 
 const name = "Cloudias Imani"
 
@@ -40,10 +41,6 @@ const listNavbar:ListNavbarInterface[] = [
     //     ]
     // }
 ];
-
-// onMounted(() => {
-//     ProductService.getProductsSmall().then((data) => (products.value = data.slice(0, 9)));
-// })
 
 const products = ref();
 products.value = [
@@ -167,9 +164,10 @@ const responsiveOptions = ref([
                         </div>
                     </div>
                     <div class="h-16 relative">
-                        <a href="#" class="inline-flex items-center px-16 py-5 text-sm font-medium text-center text-white bg-primary-font rounded-lg hover:bg-primary-font-hover focus:ring-4 focus:outline-none focus:ring-blue-300 absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        <Link href="/project/detail/1" class="inline-flex items-center px-16 py-5 text-sm font-medium text-center text-white bg-primary-font rounded-lg hover:bg-primary-font-hover focus:ring-4 focus:outline-none focus:ring-blue-300 absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                         Details
-                        </a>
+                        </Link>
+                        <!-- <link -->
                     </div>
                 </div>
             </template>
@@ -265,9 +263,9 @@ const responsiveOptions = ref([
       <!-- Footer -->
     <footer class="bg-white rounded-lg shadow-sm m-4">
         <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-        <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2025 <a href="https://flowbite.com/" class="hover:underline">Cloudias</a>. All Rights Reserved.
+        <span class="text-sm text-gray-500 sm:text-center">© 2025 <a href="https://flowbite.com/" class="hover:underline">Cloudias</a>. All Rights Reserved.
         </span>
-        <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
+        <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 sm:mt-0">
             <li>
                 <a href="#" class="hover:underline me-4 md:me-6">About Me</a>
             </li>

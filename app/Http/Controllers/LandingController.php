@@ -14,4 +14,8 @@ class LandingController extends Controller
     public function index(){
         return Inertia::render('Landing');
     }
+
+    public function detailProject(){
+        return Inertia::render('DetailProject');
+    }
 }

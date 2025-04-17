@@ -11,6 +11,7 @@ export default defineConfig({
                 'resources/js/Landing/landing.ts'
             ],
             refresh: true,
+            ssr:'resources/js/landing/ssr.ts'
         }),
         vuePlugin({}),
     ]

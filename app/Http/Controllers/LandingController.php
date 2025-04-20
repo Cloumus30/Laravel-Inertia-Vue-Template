@@ -9,13 +9,17 @@ class LandingController extends Controller
 {
     public function __construct()
     {
-        Inertia::setRootView('landing');
+        Inertia::setRootView('app');
     }
     public function index(){
-        return Inertia::render('Landing');
+        return Inertia::render('Landing/Landing');
     }
 
-    public function detailProject(){
-        return Inertia::render('DetailProject');
+    public function detailProject($id){
+        return Inertia::render('Landing/DetailProject');
+    }
+
+    public function indexProjects(){
+        return Inertia::render("Landing/ListProjects");
     }
 }

@@ -1,46 +1,13 @@
 <script setup lang="ts">
 import 'vue3-carousel/carousel.css';
-import type { ListNavbarInterface } from '@/Interface/NavbarInterface';
-import Navbar from '../../Components/Navbar.vue';
 import dana from '../../../images/dana3.png';
 import dana2 from '../../../images/dana2.jpg';
 import project1 from '../../../images/project1.png';
 import rectangle1 from '../../../images/rectangle1.png';
-import {Icon} from '@iconify/vue';
 import { Carousel } from 'primevue';
 import { ref } from 'vue';
 import { Link } from '@inertiajs/vue3';
-
-const name = "Cloudias Imani"
-
-const listNavbar:ListNavbarInterface[] = [
-    {
-        link: '/',
-        text: 'Home'
-    },
-    {
-        link: '/about',
-        text: 'About Me'
-    },
-    {
-        link: '/portfolio',
-        text: 'Portfolio'
-    },
-    // {
-    //     link: '#',
-    //     text: 'Dropdown',
-    //     childs:[
-    //         {
-    //             link: '/dashboard',
-    //             text: 'Dashboard',
-    //         },
-    //         {
-    //             link: '/signout',
-    //             text: 'Signout'
-    //         }
-    //     ]
-    // }
-];
+import LandingLayout from '@/Layouts/LandingLayout.vue';
 
 const products = ref();
 products.value = [
@@ -78,11 +45,10 @@ const responsiveOptions = ref([
 </script>
 
 <template>
-    <Navbar :list="listNavbar" title="Cloudy" :title-href="'/'" :noLogo="true">
-    </Navbar>
-    
+    <LandingLayout>
+        
     <!-- Introduction -->
-        <div class="grid grid-cols-1 md:grid-cols-2 justify-center md:pt-20 pb-96">
+    <div class="grid grid-cols-1 md:grid-cols-2 justify-center md:pt-20 pb-96">
             <!-- Description -->
             <div class="w-full flex justify-center">
                 <div class="ml-24 me-10 mt-32">
@@ -122,7 +88,7 @@ const responsiveOptions = ref([
     <!-- Introduction Detail -->
         <div class="grid grid-cols-1 md:grid-cols-2 pt-24 md:mt-0 bg-secondary-font rounded-sm md:h-screen">
             <!-- Image -->
-            <div class="flex justify-center w-full h-full items-center">
+            <div id="about" class="flex justify-center w-full h-full items-center">
                 <img :src="dana2" alt="Picture Of Dana" class="rounded-full w-80 h-80 md:hidden">
                 <img :src="dana2" alt="Picture Of Dana" class="rounded-md hidden md:block w-[30rem] h-fit">
             </div>
@@ -154,13 +120,13 @@ const responsiveOptions = ref([
             <template #item="slotProps">
                  <div class="max-w-sm relative">
                     <div class="bg-white border border-gray-200 rounded-lg shadow-xl py-8">
-                        <a href="#" class="flex justify-center">
+                        <Link href="/project/detail/1" class="flex justify-center">
                             <img class="rounded-t-lg h-96" :src="project1" alt="Project Image" />
-                        </a>
+                        </Link>
                         <div class="p-5">
-                            <a href="#">
+                            <Link href="/project/detail/1">
                                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-[#021F3E] text-center">Title Of Project {{ slotProps.data.id }}</h5>
-                            </a>
+                            </Link>
                         </div>
                     </div>
                     <div class="h-16 relative">
@@ -254,50 +220,11 @@ const responsiveOptions = ref([
                 <h1>And More ...</h1>
             </div>
         </div>
-        <div>
+        <div class="hidden md:block">
             <img :src="rectangle1" alt="Computer Image">
         </div>
      </div>
      <!-- Personal Expertise -->
-
-      <!-- Footer -->
-    <footer class="bg-white rounded-lg shadow-sm m-4">
-        <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-        <span class="text-sm text-gray-500 sm:text-center">© 2025 <a href="https://flowbite.com/" class="hover:underline">Cloudias</a>. All Rights Reserved.
-        </span>
-        <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 sm:mt-0">
-            <li>
-                <a href="#" class="hover:underline me-4 md:me-6">About Me</a>
-            </li>
-            <li>
-                <a href="#" class="hover:underline me-4 md:me-6">Portfolio</a>
-            </li>
-            <li>
-                <ul class="flex gap-3">
-                    <li >
-                        <a href="" target="_blank">
-                            <Icon icon="logos:whatsapp-icon" width="1.5em" height="1.5em"></Icon>
-                        </a>
-                    </li>
-                    <li >
-                        <a href="" target="_blank">
-                            <Icon icon="logos:github-icon" width="1.5em" height="1.5em" />
-                        </a>
-                    </li>
-                    <li >
-                        <a href="" target="_blank">
-                            <Icon icon="logos:google-gmail" width="1.5em" height="1.5em" />
-                        </a>
-                    </li>
-                    <li >
-                        <a href="" target="_blank">
-                            <Icon icon="logos:linkedin-icon" width="1.5em" height="1.5em" />
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        </div>
-    </footer>
-    <!-- Footer -->
+    </LandingLayout>
+    
 </template>

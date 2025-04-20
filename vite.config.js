@@ -8,10 +8,12 @@ export default defineConfig({
             input: [
                 'resources/js/app.ts', 
                 'resources/css/app.css', 
-                'resources/js/Landing/landing.ts'
+                'resources/js/app.ts',
             ],
             refresh: true,
-            ssr:'resources/js/landing/ssr.ts'
+            ssr:[
+                'resources/js/ssr.ts'
+            ]
         }),
         vuePlugin({}),
     ]

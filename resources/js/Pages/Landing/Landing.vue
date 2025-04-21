@@ -45,6 +45,11 @@ const responsiveOptions = ref([
 </script>
 
 <template>
+    <Head>
+        <title>Cloudias Imani Pradana</title>
+        <meta name="description" content="Cloudias' Website for better know me and know my portofolio projects">
+        <meta name="author" content="Cloudias Imani Pradana">
+    </Head>
     <LandingLayout>
         
     <!-- Introduction -->

@@ -39,7 +39,7 @@ products.value = [
                         </div>
                     </div>
                     <div class="h-16 relative">
-                        <Link href="/project/detail/1" class="inline-flex items-center px-16 py-5 text-sm font-medium text-center text-white bg-primary-font rounded-lg hover:bg-primary-font-hover focus:ring-4 focus:outline-none focus:ring-blue-300 absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        <Link href="/project/detail/1" class="inline-flex items-center px-16 py-5 text-sm font-medium text-center text-white bg-primary-font rounded-lg hover:bg-primary-font-hover focus:ring-4 focus:outline-none focus:ring-blue-300 absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer">
                         Details
                         </Link>
                         <!-- <link -->

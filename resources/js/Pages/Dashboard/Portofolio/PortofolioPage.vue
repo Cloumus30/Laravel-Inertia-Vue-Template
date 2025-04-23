@@ -4,6 +4,7 @@ import {ref} from 'vue'
 import project1 from '@/../images/project1.png'
 import { Link } from '@inertiajs/vue3';
 import Pagination from '@/Components/Pagination.vue'
+import Modal from '@/Components/Modal.vue';
 
 const products = ref();
 products.value = [
@@ -21,6 +22,8 @@ products.value = [
     }
 ];
 
+const isShowAddModal = ref(false);
+
 </script>
 <template>
     <DashboardLayout>
@@ -28,7 +31,7 @@ products.value = [
             <h3>My Projects</h3>
         </div>
         <div class="pb-2">
-            <button type="button" class="focus:outline-none text-white bg-primary-font hover:bg-primary-font-hover focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 flex gap-2">
+            <button @click="isShowAddModal = !isShowAddModal" type="button" class="focus:outline-none text-white bg-primary-font hover:bg-primary-font-hover focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 flex gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M24 16v16m-8-8h16"/></g></svg>
                 Add Porto
             </button>
@@ -66,5 +69,24 @@ products.value = [
             <Pagination></Pagination>
         </div>
         
+         <Modal :is-show-modal="isShowAddModal" @modal-close="isShowAddModal=false" :static="true" title="Add Portofolio">
+            <form class="max-w-xl h-full mx-auto">
+                <div class="relative z-0 w-full my-5">
+                    <input type="email" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-purple-600 peer" placeholder=" " required />
+                    <label for="floating_email" class="peer-focus:font-medium absolute text-base text-gray-500 duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">Title</label>
+                </div>
+                <div class="relative z-0 w-full my-5 group">
+                    <label class="block mb-2 text-sm font-medium text-gray-900" for="user_avatar">Upload file</label>
+                    <input class="block w-full text-sm border border-purple-300 rounded-lg cursor-pointer bg-gray-200 text-gray-900 focus:outline-none file:bg-primary-font file:border-none file:hover:bg-primary-font-hover file:hover:cursor-pointer file:text-white" id="user_avatar" type="file">
+                    <div class="mt-1 mb-5 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">A profile picture is useful to confirm your are logged into your account</div>
+                </div>
+                <div class="relative z-0 w-full my-5 group">
+                    <input type="text" name="tags" id="floating_tags" class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-500 focus:outline-none focus:ring-0 focus:border-purple-600 peer" placeholder=" " required />
+                    <label for="floating_tags" class="peer-focus:font-medium absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">Tags</label>
+                </div>
+                
+                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
+            </form>
+         </Modal>
     </DashboardLayout>
 </template>

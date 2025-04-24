@@ -1,3 +1,4 @@
+@import url("/resources/js/Library/multiselect-vue/src/vue-multiselect.css");
 @theme{
     --color-primary: #713EDA;
     --shadow-3xl: 0 35px 35px rgba(0, 0, 0, 0.25); 

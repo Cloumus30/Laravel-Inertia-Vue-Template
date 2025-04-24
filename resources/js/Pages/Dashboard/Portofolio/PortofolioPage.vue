@@ -5,8 +5,11 @@ import project1 from '@/../images/project1.png'
 import { Link } from '@inertiajs/vue3';
 import Pagination from '@/Components/Pagination.vue'
 import Modal from '@/Components/Modal.vue';
+import Multiselect from "@/Library/multiselect-vue/src/Multiselect.vue";
 
 const products = ref();
+const options = ref();
+const tagVal = ref([]);
 products.value = [
     {
         id:1
@@ -21,7 +24,7 @@ products.value = [
         id:4
     }
 ];
-
+options.value = ['list', 'of', 'options'];
 const isShowAddModal = ref(false);
 
 </script>
@@ -72,16 +75,36 @@ const isShowAddModal = ref(false);
          <Modal :is-show-modal="isShowAddModal" @modal-close="isShowAddModal=false" :static="true" title="Add Portofolio">
             <form class="max-w-xl h-full mx-auto">
                 <div class="relative z-0 w-full my-5">
-                    <input type="email" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-purple-600 peer" placeholder=" " required />
+                    <input type="email" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-purple-600 peer" v-model="tagVal" placeholder=" " required />
                     <label for="floating_email" class="peer-focus:font-medium absolute text-base text-gray-500 duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">Title</label>
                 </div>
                 <div class="relative z-0 w-full my-5 group">
                     <label class="block mb-2 text-sm font-medium text-gray-900" for="user_avatar">Upload file</label>
                     <input class="block w-full text-sm border border-purple-300 rounded-lg cursor-pointer bg-gray-200 text-gray-900 focus:outline-none file:bg-primary-font file:border-none file:hover:bg-primary-font-hover file:hover:cursor-pointer file:text-white" id="user_avatar" type="file">
-                    <div class="mt-1 mb-5 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">A profile picture is useful to confirm your are logged into your account</div>
+                    <div class="mt-1 mb-5 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">File bertipe PDF maks (4MB)</div>
                 </div>
                 <div class="relative z-0 w-full my-5 group">
-                    <input type="text" name="tags" id="floating_tags" class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-500 focus:outline-none focus:ring-0 focus:border-purple-600 peer" placeholder=" " required />
+                    <multiselect class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent dark:text-white focus:outline-none focus:ring-0 focus:border-purple-600 peer" placeholder=" " v-model="tagVal" :options="options" :multiple="true" :close-on-select="false" :clear-on-select="false">
+
+                        <template #option="props">
+                            <img class="option__image" :src="props.option.img" alt="No Man’s Sky"/>
+                            <div class="">
+                                    <span class="">{{ props.option.title }}</span>
+                                    <span
+                                class="">{{ props.option.desc }}</span>
+                            </div>
+                        </template>
+
+                        <template #tag="{ option, remove}">
+                            <span class="multiselect__tag !bg-primary-font !text-white " @mousedown.prevent>
+                                <span v-text="option"></span>
+                                <i tabindex="1" @keypress.enter.prevent="remove(option)"
+                                @mousedown.prevent="remove(option)" class="multiselect__tag-icon mt-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 32 32"><path fill="currentColor" d="M16 2C8.2 2 2 8.2 2 16s6.2 14 14 14s14-6.2 14-14S23.8 2 16 2m0 26C9.4 28 4 22.6 4 16S9.4 4 16 4s12 5.4 12 12s-5.4 12-12 12"/><path fill="currentColor" d="M21.4 23L16 17.6L10.6 23L9 21.4l5.4-5.4L9 10.6L10.6 9l5.4 5.4L21.4 9l1.6 1.6l-5.4 5.4l5.4 5.4z"/></svg>
+                                </i>
+                            </span>
+                        </template>
+                    </multiselect>
                     <label for="floating_tags" class="peer-focus:font-medium absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">Tags</label>
                 </div>
                 

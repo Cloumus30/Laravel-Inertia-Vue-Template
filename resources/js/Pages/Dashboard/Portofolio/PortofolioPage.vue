@@ -10,6 +10,8 @@ import Multiselect from "@/Library/multiselect-vue/src/Multiselect.vue";
 const products = ref();
 const options = ref();
 const tagVal = ref([]);
+const filePorto = ref();
+const srcFile = ref();
 products.value = [
     {
         id:1
@@ -26,6 +28,19 @@ products.value = [
 ];
 options.value = ['list', 'of', 'options'];
 const isShowAddModal = ref(false);
+const isShowPreviewModal = ref(false);
+const isShowPreviewBtn = ref(false);
+
+const onUploadFile = (e) =>{
+    filePorto.value = e.target.files[0];
+    isShowPreviewBtn.value = true;
+}
+
+const onPreviewFile = () =>{
+    const src = URL.createObjectURL(filePorto.value);
+    srcFile.value = src;
+    isShowPreviewModal.value = true;
+}
 
 </script>
 <template>
@@ -80,21 +95,15 @@ const isShowAddModal = ref(false);
                 </div>
                 <div class="relative z-0 w-full my-5 group">
                     <label class="block mb-2 text-sm font-medium text-gray-900" for="user_avatar">Upload file</label>
-                    <input class="block w-full text-sm border border-purple-300 rounded-lg cursor-pointer bg-gray-200 text-gray-900 focus:outline-none file:bg-primary-font file:border-none file:hover:bg-primary-font-hover file:hover:cursor-pointer file:text-white" id="user_avatar" type="file">
+                    <input class="block w-full text-sm border border-purple-300 rounded-lg cursor-pointer bg-gray-200 text-gray-900 focus:outline-none file:bg-primary-font file:border-none file:hover:bg-primary-font-hover file:hover:cursor-pointer file:text-white" id="user_avatar" type="file" v-on:change="onUploadFile">
+                    <button v-if="isShowPreviewBtn" @click="onPreviewFile" type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-[0.6rem] px-3 py-1 my-1">Preview File</button>
                     <div class="mt-1 mb-5 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">File bertipe PDF maks (4MB)</div>
                 </div>
-                <div class="relative z-0 w-full my-5 group">
-                    <multiselect class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent dark:text-white focus:outline-none focus:ring-0 focus:border-purple-600 peer" placeholder=" " v-model="tagVal" :options="options" :multiple="true" :close-on-select="false" :clear-on-select="false">
-
-                        <template #option="props">
-                            <img class="option__image" :src="props.option.img" alt="No Man’s Sky"/>
-                            <div class="">
-                                    <span class="">{{ props.option.title }}</span>
-                                    <span
-                                class="">{{ props.option.desc }}</span>
-                            </div>
-                        </template>
-
+                <!-- <div>
+                    <embed :src="srcFile" type="">
+                </div> -->
+                <div class="relative z-0 w-full mt-8 mb-5 group">
+                    <multiselect class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent dark:text-white focus:outline-none focus:ring-0 focus:border-purple-600 peer" placeholder="Select Tags" v-model="tagVal" :options="options" :multiple="true" :close-on-select="false" :clear-on-select="false">
                         <template #tag="{ option, remove}">
                             <span class="multiselect__tag !bg-primary-font !text-white " @mousedown.prevent>
                                 <span v-text="option"></span>
@@ -105,11 +114,17 @@ const isShowAddModal = ref(false);
                             </span>
                         </template>
                     </multiselect>
-                    <label for="floating_tags" class="peer-focus:font-medium absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">Tags</label>
+                    <label for="floating_tags" class="peer-focus:font-medium absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-8 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Tags</label>
                 </div>
                 
                 <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
             </form>
+         </Modal>
+
+         <Modal :is-show-modal="isShowPreviewModal" @modal-close="isShowPreviewModal=false" title="Preview File">
+            
+            <embed class="w-full h-[29rem]" :src="srcFile" type="">
+            
          </Modal>
     </DashboardLayout>
 </template>

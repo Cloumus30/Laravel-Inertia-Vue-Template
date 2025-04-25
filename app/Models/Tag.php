@@ -13,7 +13,7 @@ class Tag extends Model
 
     protected $fillable = [
         'name',
-        'jumlah_porto'
+        // 'jumlah_porto'
     ];
 
     public function portos(){

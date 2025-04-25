@@ -41,7 +41,7 @@ const listNavbar:ListNavbarInterface[] = [
     <slot/>
 
     <!-- Footer -->
-    <footer class="bg-white rounded-lg shadow-sm m-4">
+    <!-- <footer class="bg-white rounded-lg shadow-sm m-4">
         <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
         <span class="text-sm text-gray-500 sm:text-center">© 2025 <a href="https://flowbite.com/" class="hover:underline">Cloudias</a>. All Rights Reserved.
         </span>
@@ -78,6 +78,6 @@ const listNavbar:ListNavbarInterface[] = [
             </li>
         </ul>
         </div>
-    </footer>
+    </footer> -->
     <!-- Footer -->
 </template>

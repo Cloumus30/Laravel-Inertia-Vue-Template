@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -16,7 +17,12 @@ class LandingController extends Controller
     }
 
     public function detailProject($id){
-        return Inertia::render('Landing/DetailProject');
+        $param = request()->query('tl');
+        throw new Exception("Error Processing Request", 500);
+        
+        return Inertia::render('Landing/DetailProject', [
+            'titleParam' => $param
+        ]);
     }
 
     public function indexProjects(){

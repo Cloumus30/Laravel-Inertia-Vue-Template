@@ -1,17 +1,20 @@
 <script setup lang="ts">
 import DashboardLayout from "@/Layouts/DashboardLayout.vue";
-import {ref} from 'vue'
+import {ref, useTemplateRef} from 'vue'
 import project1 from '@/../images/project1.png'
 import { Link } from '@inertiajs/vue3';
 import Pagination from '@/Components/Pagination.vue'
 import Modal from '@/Components/Modal.vue';
 import Multiselect from "@/Library/multiselect-vue/src/Multiselect.vue";
+import { title } from "@primeuix/themes/aura/card";
 
 const products = ref();
 const options = ref();
 const tagVal = ref([]);
 const filePorto = ref();
 const srcFile = ref();
+const titleVal = ref();
+const inputFilePorto = useTemplateRef('inputFilePorto');
 products.value = [
     {
         id:1
@@ -26,7 +29,44 @@ products.value = [
         id:4
     }
 ];
-options.value = ['list', 'of', 'options'];
+options.value = [
+    {
+        id:1,
+        name:'list'
+    },
+    {
+        id:2,
+        name:'Of'
+    },
+    {
+        id:3,
+        name:'Options'
+    },
+    {
+        id:4,
+        name:'list2'
+    },
+    {
+        id:5,
+        name:'Of2'
+    },
+    {
+        id:6,
+        name:'Options2'
+    },
+    {
+        id:7,
+        name:'list2'
+    },
+    {
+        id:8,
+        name:'Of2'
+    },
+    {
+        id:9,
+        name:'Options2'
+    },
+];
 const isShowAddModal = ref(false);
 const isShowPreviewModal = ref(false);
 const isShowPreviewBtn = ref(false);
@@ -40,6 +80,24 @@ const onPreviewFile = () =>{
     const src = URL.createObjectURL(filePorto.value);
     srcFile.value = src;
     isShowPreviewModal.value = true;
+}
+
+const resetFormAdd = () =>{
+    filePorto.value = null;
+    isShowPreviewBtn.value = false;
+    tagVal.value = [];
+    filePorto.value = null;
+    titleVal.value = null;
+    if(inputFilePorto.value){
+        inputFilePorto.value.value = '';
+    }
+    
+}
+
+const cancelAddPorto = ()=>{
+    isShowAddModal.value = false;
+    resetFormAdd();
+
 }
 
 </script>
@@ -90,12 +148,14 @@ const onPreviewFile = () =>{
          <Modal :is-show-modal="isShowAddModal" @modal-close="isShowAddModal=false" :static="true" title="Add Portofolio">
             <form class="max-w-xl h-full mx-auto">
                 <div class="relative z-0 w-full my-5">
-                    <input type="email" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-purple-600 peer" v-model="tagVal" placeholder=" " required />
-                    <label for="floating_email" class="peer-focus:font-medium absolute text-base text-gray-500 duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">Title</label>
+                    <input type="text" name="title" v-model="titleVal" id="title" class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-purple-600 peer" placeholder=" " required />
+                    <label for="title" class="peer-focus:font-medium absolute text-base text-gray-500 duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">Title</label>
                 </div>
                 <div class="relative z-0 w-full my-5 group">
                     <label class="block mb-2 text-sm font-medium text-gray-900" for="user_avatar">Upload file</label>
-                    <input class="block w-full text-sm border border-purple-300 rounded-lg cursor-pointer bg-gray-200 text-gray-900 focus:outline-none file:bg-primary-font file:border-none file:hover:bg-primary-font-hover file:hover:cursor-pointer file:text-white" id="user_avatar" type="file" v-on:change="onUploadFile">
+                    
+                    <input class="block w-full text-sm border border-purple-300 rounded-lg cursor-pointer bg-gray-200 text-gray-900 focus:outline-none file:bg-primary-font file:border-none file:hover:bg-primary-font-hover file:hover:cursor-pointer file:text-white" id="user_avatar" type="file" v-on:change="onUploadFile" ref="inputFilePorto" accept="application/pdf">
+
                     <button v-if="isShowPreviewBtn" @click="onPreviewFile" type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-[0.6rem] px-3 py-1 my-1">Preview File</button>
                     <div class="mt-1 mb-5 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">File bertipe PDF maks (4MB)</div>
                 </div>
@@ -103,10 +163,10 @@ const onPreviewFile = () =>{
                     <embed :src="srcFile" type="">
                 </div> -->
                 <div class="relative z-0 w-full mt-8 mb-5 group">
-                    <multiselect class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent dark:text-white focus:outline-none focus:ring-0 focus:border-purple-600 peer" placeholder="Select Tags" v-model="tagVal" :options="options" :multiple="true" :close-on-select="false" :clear-on-select="false">
+                    <multiselect class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent dark:text-white focus:outline-none focus:ring-0 focus:border-purple-600 peer" placeholder="Select Tags" v-model="tagVal" :options="options" :multiple="true" :close-on-select="false" :clear-on-select="false" :taggable="true" track-by="id" label="name">
                         <template #tag="{ option, remove}">
                             <span class="multiselect__tag !bg-primary-font !text-white " @mousedown.prevent>
-                                <span v-text="option"></span>
+                                <span v-text="option.name"></span>
                                 <i tabindex="1" @keypress.enter.prevent="remove(option)"
                                 @mousedown.prevent="remove(option)" class="multiselect__tag-icon mt-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 32 32"><path fill="currentColor" d="M16 2C8.2 2 2 8.2 2 16s6.2 14 14 14s14-6.2 14-14S23.8 2 16 2m0 26C9.4 28 4 22.6 4 16S9.4 4 16 4s12 5.4 12 12s-5.4 12-12 12"/><path fill="currentColor" d="M21.4 23L16 17.6L10.6 23L9 21.4l5.4-5.4L9 10.6L10.6 9l5.4 5.4L21.4 9l1.6 1.6l-5.4 5.4l5.4 5.4z"/></svg>
@@ -116,9 +176,11 @@ const onPreviewFile = () =>{
                     </multiselect>
                     <label for="floating_tags" class="peer-focus:font-medium absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-8 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Tags</label>
                 </div>
-                
-                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
             </form>
+            <template #footer>
+                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Tambah</button>
+                <button @click="cancelAddPorto" type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Batal</button>
+            </template>
          </Modal>
 
          <Modal :is-show-modal="isShowPreviewModal" @modal-close="isShowPreviewModal=false" title="Preview File">

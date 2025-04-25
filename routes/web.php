@@ -23,3 +23,4 @@ Route::prefix('dashboard')->group(function(){
         Route::get('/', [ProjectController::class, 'index']);
     });
 });
+

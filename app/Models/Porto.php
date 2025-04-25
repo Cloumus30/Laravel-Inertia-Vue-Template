@@ -12,9 +12,8 @@ class Porto extends Model
     protected $table = 'portos';
     protected $fillable = [
         'title',
-        'short_desc',
-        'description',
-        'photo',
+        'short_description',
+        'file_path',
         'link',
         'user_id',
     ];

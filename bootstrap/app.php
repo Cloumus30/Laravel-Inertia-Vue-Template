@@ -34,20 +34,14 @@ return Application::configure(basePath: dirname(__DIR__))
                     ->toResponse($request)
                     ->setStatusCode($response->getStatusCode());
             }
-            // 500, 503, 403 Status ONly in Production
-            if (!app()->environment(['local', 'testing']) && in_array($response->getStatusCode(), [500, 503, 403])) {
-                
+            // 419, 500, 503, 403 Status ONly in Production
+            if (!app()->environment(['local', 'testing']) && in_array($response->getStatusCode(), [419, 500, 503, 403])) {
                 return Inertia::render('ErrorPage', 
                     [
                         'status' => $response->getStatusCode(),
                     ])
                     ->toResponse($request)
                     ->setStatusCode($response->getStatusCode());
-            } elseif ($response->getStatusCode() === 419) {
-                // 419 Http Code
-                return back()->with([
-                    'message' => 'The page expired, please try again.',
-                ]);
             }
     
             return $response;

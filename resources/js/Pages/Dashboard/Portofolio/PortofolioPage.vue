@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import DashboardLayout from "@/Layouts/DashboardLayout.vue";
-import {ref, useTemplateRef} from 'vue'
+import {getCurrentInstance, onMounted, ref, useTemplateRef} from 'vue'
 import project1 from '@/../images/project1.png'
 import { Link } from '@inertiajs/vue3';
 import Pagination from '@/Components/Pagination.vue'
 import Modal from '@/Components/Modal.vue';
 import Multiselect from "@/Library/multiselect-vue/src/Multiselect.vue";
 import { title } from "@primeuix/themes/aura/card";
+import axios2 from "@/plugins/axios2";
 
+const app = getCurrentInstance();
 const products = ref();
 const options = ref();
 const tagVal = ref([]);
@@ -97,8 +99,14 @@ const resetFormAdd = () =>{
 const cancelAddPorto = ()=>{
     isShowAddModal.value = false;
     resetFormAdd();
-
 }
+
+onMounted(()=>{
+    // console.log(app?.appContext.config.globalProperties.$axios, 'page')
+    axios2.post('/api/project/add')
+})
+
+
 
 </script>
 <template>

@@ -13,10 +13,12 @@ Route::prefix('project')->group(function(){
 });
 
 Route::prefix('auth')->group(function(){
-    Route::get('/login', [AuthController::class, 'login']);
+    Route::get('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/login', [AuthController::class, 'loginStore']);
+    Route::get('/logout', [AuthController::class, 'logout']);
 });
 
-Route::prefix('dashboard')->group(function(){
+Route::prefix('dashboard')->middleware('auth')->group(function(){
     Route::get('/', [HomeController::class, 'index']);
 
     Route::prefix('project')->group(function(){
@@ -24,3 +26,4 @@ Route::prefix('dashboard')->group(function(){
     });
 });
 
+Route::post('/api/project/add', [ProjectController::class, 'store']);

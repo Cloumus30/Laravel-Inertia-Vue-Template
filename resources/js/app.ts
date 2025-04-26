@@ -9,6 +9,7 @@ import {resolvePageComponent} from 'laravel-vite-plugin/inertia-helpers'
 import PrimeVue from 'primevue/config';
 import Aura from '@primeuix/themes/aura';
 import ClickOutsideDirective from './Directives/ClickOutsideDirective';
+import axios from './plugins/axios';
 // import "@/Library/multiselect-vue/src/vue-multiselect.css";
 
 createInertiaApp({
@@ -21,6 +22,7 @@ createInertiaApp({
     const app = createApp({ render: () => h(App, props) })
       .use(plugin);
     app.use(PrimeVue, {theme:{preset: Aura}});
+    app.use(axios,{opt:'coba'});
     app.directive('click-outside', ClickOutsideDirective)
     app.mount(el);
   },

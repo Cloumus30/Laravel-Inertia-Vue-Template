@@ -13,7 +13,7 @@ abstract class Controller
 
     public function errorJsonResponse(Array|String $message='Error', $data=null, $status=400){
         if(gettype($message) == 'array'){
-            $msg = array_column($message, 0);
+            $msg = array_column(array_values($message),0);
             $message = implode(' |',$msg);
         }
         return response()->json([

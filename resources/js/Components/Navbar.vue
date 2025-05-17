@@ -27,7 +27,7 @@ const props = defineProps({
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 border border-transparent border-b-[#120D40] border-b-2">
             <a :href="props.titleHref ? props.titleHref : '/'" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <slot v-if="!props.noLogo" name="logo">
-                    <img :src="props.logoHref ? props.logoHref : 'https://flowbite.com/docs/images/logo.svg'" class="h-8" alt="Logo" />
+                    <img :src="props.logoHref ? props.logoHref : ''" class="h-8" alt="Logo" />
                 </slot>
                 <slot name="title">
                     <span class="self-center text-2xl font-semibold whitespace-nowrap">{{props.title}}</span>

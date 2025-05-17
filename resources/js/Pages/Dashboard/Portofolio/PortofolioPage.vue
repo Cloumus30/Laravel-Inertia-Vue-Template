@@ -6,8 +6,12 @@ import { Link } from '@inertiajs/vue3';
 import Pagination from '@/Components/Pagination.vue'
 import Modal from '@/Components/Modal.vue';
 import Multiselect from "@/Library/multiselect-vue/src/Multiselect.vue";
-import { title } from "@primeuix/themes/aura/card";
-import axios2 from "@/plugins/axios2";
+import axios2 from "@/Utilities/axiosService";
+import { useForm } from "vee-validate";
+import { z } from "zod";
+import axiosService from "@/Utilities/axiosService";
+import Swal from "sweetalert2";
+import PortoApi from "@/api/porto";
 
 const app = getCurrentInstance();
 const products = ref();
@@ -17,6 +21,17 @@ const filePorto = ref();
 const srcFile = ref();
 const titleVal = ref();
 const inputFilePorto = useTemplateRef('inputFilePorto');
+
+// Form
+const schemaAddPorto = z.object({
+    title: z.string().min(3),
+    tags: z.array(z.string()).optional(),
+})
+const {values:formValues, defineField, resetForm:formAddReset} = useForm({})
+
+const [title, titleProps] = defineField('title');
+const [tags, tagsProps] = defineField('tags');
+
 products.value = [
     {
         id:1
@@ -93,7 +108,7 @@ const resetFormAdd = () =>{
     if(inputFilePorto.value){
         inputFilePorto.value.value = '';
     }
-    
+    formAddReset();   
 }
 
 const cancelAddPorto = ()=>{
@@ -103,8 +118,17 @@ const cancelAddPorto = ()=>{
 
 onMounted(()=>{
     // console.log(app?.appContext.config.globalProperties.$axios, 'page')
-    axios2.post('/api/project/add')
+    // axios2.post('/api/project/add')
 })
+
+const submitFormAdd = async () =>{
+    const res = await PortoApi.addPorto(formValues);
+    // if(res?.data){
+    //     Swal.fire({
+    //         text: res.data,
+    //     });
+    // }
+}
 
 
 
@@ -156,7 +180,7 @@ onMounted(()=>{
          <Modal :is-show-modal="isShowAddModal" @modal-close="isShowAddModal=false" :static="true" title="Add Portofolio">
             <form class="max-w-xl h-full mx-auto">
                 <div class="relative z-0 w-full my-5">
-                    <input type="text" name="title" v-model="titleVal" id="title" class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-purple-600 peer" placeholder=" " required />
+                    <input type="text" name="title" v-model="title" id="title" class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-purple-600 peer" placeholder=" " required />
                     <label for="title" class="peer-focus:font-medium absolute text-base text-gray-500 duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">Title</label>
                 </div>
                 <div class="relative z-0 w-full my-5 group">
@@ -171,7 +195,7 @@ onMounted(()=>{
                     <embed :src="srcFile" type="">
                 </div> -->
                 <div class="relative z-0 w-full mt-8 mb-5 group">
-                    <multiselect class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent dark:text-white focus:outline-none focus:ring-0 focus:border-purple-600 peer" placeholder="Select Tags" v-model="tagVal" :options="options" :multiple="true" :close-on-select="false" :clear-on-select="false" :taggable="true" track-by="id" label="name">
+                    <multiselect class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent dark:text-white focus:outline-none focus:ring-0 focus:border-purple-600 peer" placeholder="Select Tags" v-model="tags" :options="options" :multiple="true" :close-on-select="false" :clear-on-select="false" :taggable="true" track-by="id" label="name">
                         <template #tag="{ option, remove}">
                             <span class="multiselect__tag !bg-primary-font !text-white " @mousedown.prevent>
                                 <span v-text="option.name"></span>
@@ -186,7 +210,7 @@ onMounted(()=>{
                 </div>
             </form>
             <template #footer>
-                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Tambah</button>
+                <button @click="submitFormAdd" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Tambah</button>
                 <button @click="cancelAddPorto" type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Batal</button>
             </template>
          </Modal>
